@@ -10,15 +10,7 @@ app.get('/marina', (req, res) => {
         return res.status(400).json({ error: "Missing or invalid 'laza' parameter" });
     }
 
-    // Nettoyage et validation rapide
-    let laza = rawLaza.trim().replace(/^["']|["']$/g, '');
-
-    const parensDiff = (laza.match(/\(/g) || []).length - (laza.match(/\)/g) || []).length;
-    if (parensDiff !== 0) {
-        return res.status(400).json({ error: "Unbalanced parentheses in formula" });
-    }
-
-    execFile('./marina', [laza], { timeout: 5000 }, (error, stdout, stderr) => {
+    execFile('./marina', [rawLaza], { timeout: 5000 }, (error, stdout, stderr) => {
         if (error) {
             return res.status(500).json({ error: stderr?.trim() || error.message });
         }
