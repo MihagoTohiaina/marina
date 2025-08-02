@@ -1,4 +1,4 @@
-FROM jod-bullseye
+FROM node:jod-bullseye
 
 RUN apt-get update && apt-get install -y make ocaml opam && rm -rf /var/lib/apt/lists/*
 
